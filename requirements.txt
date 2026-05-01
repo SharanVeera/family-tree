@@ -1,0 +1,11 @@
+# Graph DB
+falkordb==1.0.9
+fastapi==0.115.0
+uvicorn==0.30.6
+pydantic==2.9.2
+langchain==0.3.1
+langchain-groq==0.2.0
+langgraph==0.2.28
+python-dotenv==1.0.1
+httpx==0.27.2
+pytest==8.3.3

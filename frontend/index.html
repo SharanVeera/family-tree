@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Veerapuram Family Tree</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #0f0e0c;
+    --surface:   #1a1814;
+    --border:    #2e2a24;
+    --gold:      #c9a84c;
+    --gold-dim:  #7a6230;
+    --text:      #e8e0d0;
+    --muted:     #7a7060;
+    --accent:    #d4855a;
+    --green:     #6aab7e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  /* --- Header --- */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface);
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--gold);
+    letter-spacing: 0.02em;
+  }
+
+  header p {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .header-badge {
+    background: var(--border);
+    border: 1px solid var(--gold-dim);
+    border-radius: 4px;
+    padding: 0.4rem 1rem;
+    font-size: 0.75rem;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+  }
+
+  /* --- Layout --- */
+  .layout {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    height: calc(100vh - 89px);
+  }
+
+  /* --- Sidebar --- */
+  .sidebar {
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .search-box {
+    padding: 1.2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .search-box input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.7rem 1rem;
+    border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-box input:focus { border-color: var(--gold-dim); }
+  .search-box input::placeholder { color: var(--muted); }
+
+  .member-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.5rem 0;
+  }
+
+  .member-list::-webkit-scrollbar { width: 4px; }
+  .member-list::-webkit-scrollbar-track { background: transparent; }
+  .member-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .member-item {
+    padding: 0.8rem 1.2rem;
+    cursor: pointer;
+    border-left: 2px solid transparent;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .member-item:hover { background: var(--surface); border-left-color: var(--gold-dim); }
+  .member-item.active { background: var(--surface); border-left-color: var(--gold); }
+
+  .member-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  .avatar-male   { background: #1a2a3a; color: #6ba3d6; }
+  .avatar-female { background: #2a1a2a; color: #d68bb5; }
+
+  .member-info { flex: 1; min-width: 0; }
+
+  .member-name {
+    font-size: 0.85rem;
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text);
+  }
+
+  .member-meta {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 0.1rem;
+  }
+
+  .sidebar-footer {
+    padding: 0.8rem 1.2rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 0.6rem;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+
+  .btn:hover { border-color: var(--gold-dim); color: var(--gold); }
+  .btn-gold { border-color: var(--gold-dim); color: var(--gold); }
+
+  /* --- Main Panel --- */
+  .main {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* --- Tabs --- */
+  .tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .tab {
+    padding: 1rem 1.5rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .tab-content { flex: 1; overflow-y: auto; padding: 2rem; display: none; }
+  .tab-content.active { display: block; }
+
+  /* --- Stats Grid --- */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.2rem;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .stat-sub {
+    font-size: 0.78rem;
+    color: var(--text);
+    margin-top: 0.3rem;
+  }
+
+  /* --- Person Profile --- */
+  .profile-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .profile-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    flex-shrink: 0;
+  }
+
+  .profile-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--gold);
+    line-height: 1.2;
+  }
+
+  .profile-sub {
+    color: var(--muted);
+    font-size: 0.82rem;
+    margin-top: 0.3rem;
+  }
+
+  .profile-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+  }
+
+  .detail-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.8rem;
+  }
+
+  .detail-label {
+    font-size: 0.68rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.3rem;
+  }
+
+  .detail-value {
+    font-size: 0.88rem;
+    color: var(--text);
+  }
+
+  /* --- Connections --- */
+  .connections-section { margin-top: 1.5rem; }
+
+  .connections-title {
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.8rem;
+  }
+
+  .connection-group { margin-bottom: 1.5rem; }
+
+  .connection-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .chip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text);
+  }
+
+  .chip:hover { border-color: var(--gold-dim); color: var(--gold); }
+  .chip-parent  { border-color: #3a4a2a; color: var(--green); }
+  .chip-child   { border-color: #2a3a4a; color: #6ba3d6; }
+  .chip-spouse  { border-color: #4a2a2a; color: var(--accent); }
+  .chip-sibling { border-color: #3a2a4a; color: #a07ad6; }
+
+  /* --- AI Chat --- */
+  .chat-area {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .chat-messages::-webkit-scrollbar { width: 4px; }
+  .chat-messages::-webkit-scrollbar-thumb { background: var(--border); }
+
+  .message {
+    max-width: 80%;
+    padding: 0.9rem 1.2rem;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+
+  .message-user {
+    align-self: flex-end;
+    background: var(--gold-dim);
+    color: var(--text);
+    border-radius: 6px 6px 0 6px;
+  }
+
+  .message-agent {
+    align-self: flex-start;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px 6px 6px 0;
+    color: var(--text);
+  }
+
+  .message-thinking {
+    align-self: flex-start;
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-style: italic;
+    padding: 0.5rem 0;
+  }
+
+  .chat-input-area {
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+    display: flex;
+    gap: 0.8rem;
+  }
+
+  .chat-input {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.8rem 1rem;
+    border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+    resize: none;
+  }
+
+  .chat-input:focus { border-color: var(--gold-dim); }
+  .chat-input::placeholder { color: var(--muted); }
+
+  .btn-send {
+    background: var(--gold-dim);
+    border: none;
+    color: var(--text);
+    padding: 0.8rem 1.4rem;
+    border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    letter-spacing: 0.05em;
+  }
+
+  .btn-send:hover { background: var(--gold); color: var(--bg); }
+  .btn-send:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .suggested-questions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .suggested-q {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 0.35rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .suggested-q:hover { border-color: var(--gold-dim); color: var(--gold); }
+
+  /* --- Empty state --- */
+  .empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--muted);
+    text-align: center;
+    gap: 0.5rem;
+  }
+
+  .empty-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+  .empty-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--text); }
+  .empty-sub { font-size: 0.82rem; }
+
+  /* Scrollbar */
+  .tab-content::-webkit-scrollbar { width: 4px; }
+  .tab-content::-webkit-scrollbar-thumb { background: var(--border); }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>🌳 Veerapuram Family Tree</h1>
+    <p>Knowledge Graph Explorer</p>
+  </div>
+  <div class="header-badge" id="health-badge">Connecting...</div>
+</header>
+
+<div class="layout">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="search-box">
+      <input type="text" id="search-input" placeholder="Search family members..." />
+    </div>
+    <div class="member-list" id="member-list">
+      <div class="empty" style="height:200px">
+        <div class="empty-sub">Loading members...</div>
+      </div>
+    </div>
+    <div class="sidebar-footer">
+      <button class="btn" onclick="loadAllMembers()">All Members</button>
+      <button class="btn btn-gold" onclick="loadRandomMember()">✦ Random</button>
+    </div>
+  </div>
+
+  <!-- Main Panel -->
+  <div class="main">
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab('overview')">Overview</div>
+      <div class="tab" onclick="switchTab('profile')">Profile</div>
+      <div class="tab" onclick="switchTab('ask')">Ask AI</div>
+    </div>
+
+    <!-- Overview Tab -->
+    <div class="tab-content active" id="tab-overview">
+      <div id="stats-container">
+        <div class="empty">
+          <div class="empty-sub">Loading stats...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile Tab -->
+    <div class="tab-content" id="tab-profile">
+      <div id="profile-container">
+        <div class="empty">
+          <div class="empty-icon">👤</div>
+          <div class="empty-title">No one selected</div>
+          <div class="empty-sub">Click a family member from the list to see their profile</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ask AI Tab -->
+    <div class="tab-content" id="tab-ask">
+      <div class="chat-area">
+        <div class="suggested-questions">
+          <span class="suggested-q" onclick="askQuestion(this.textContent)">Who are Sharan's parents?</span>
+          <span class="suggested-q" onclick="askQuestion(this.textContent)">Who are Sharan's grandparents?</span>
+          <span class="suggested-q" onclick="askQuestion(this.textContent)">How many members are over 50?</span>
+          <span class="suggested-q" onclick="askQuestion(this.textContent)">How many males vs females?</span>
+          <span class="suggested-q" onclick="askQuestion(this.textContent)">Who lives outside India?</span>
+          <span class="suggested-q" onclick="askQuestion(this.textContent)">Who are Sharan's cousins?</span>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+          <div class="message message-agent">
+            👋 Hello! I'm your family tree assistant. Ask me anything about the Veerapuram family — relationships, statistics, or connections between members!
+          </div>
+        </div>
+        <div class="chat-input-area">
+          <textarea class="chat-input" id="chat-input" placeholder="Ask about your family tree..." rows="2"
+            onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();sendMessage();}"></textarea>
+          <button class="btn-send" id="send-btn" onclick="sendMessage()">Ask</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = 'http://localhost:8000';
+let allMembers = [];
+let selectedMember = null;
+
+// --- Init ---
+async function init() {
+  await checkHealth();
+  await loadStats();
+  await loadAllMembers();
+}
+
+// --- Health Check ---
+async function checkHealth() {
+  try {
+    const res  = await fetch(`${API}/health`);
+    const data = await res.json();
+    const badge = document.getElementById('health-badge');
+    badge.textContent = `✦ ${data.total_members} Members`;
+    badge.style.borderColor = '#6aab7e';
+    badge.style.color = '#6aab7e';
+  } catch {
+    document.getElementById('health-badge').textContent = '⚠ Offline';
+  }
+}
+
+// --- Stats ---
+async function loadStats() {
+  try {
+    const res  = await fetch(`${API}/stats`);
+    const data = await res.json();
+    document.getElementById('stats-container').innerHTML = `
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">${data.total_members}</div>
+          <div class="stat-label">Family Members</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">${data.total_relationships}</div>
+          <div class="stat-label">Relationships</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">${data.males}</div>
+          <div class="stat-label">Males</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">${data.females}</div>
+          <div class="stat-label">Females</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">${data.deceased}</div>
+          <div class="stat-label">Deceased</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="stat-card" style="text-align:left">
+          <div class="stat-label">Oldest Living Member</div>
+          <div class="stat-sub" style="margin-top:0.5rem;font-size:0.95rem;color:var(--gold)">
+            ${data.oldest ? data.oldest.name : 'N/A'}
+          </div>
+          <div class="stat-sub" style="color:var(--muted)">Born ${data.oldest ? data.oldest.born : ''}</div>
+        </div>
+        <div class="stat-card" style="text-align:left">
+          <div class="stat-label">Youngest Member</div>
+          <div class="stat-sub" style="margin-top:0.5rem;font-size:0.95rem;color:var(--gold)">
+            ${data.youngest ? data.youngest.name : 'N/A'}
+          </div>
+          <div class="stat-sub" style="color:var(--muted)">Born ${data.youngest ? data.youngest.born : ''}</div>
+        </div>
+      </div>
+    `;
+  } catch(e) {
+    document.getElementById('stats-container').innerHTML = `<div class="empty"><div class="empty-sub">Could not load stats</div></div>`;
+  }
+}
+
+// --- Members List ---
+async function loadAllMembers() {
+  try {
+    const res  = await fetch(`${API}/members`);
+    const data = await res.json();
+    allMembers = data.members;
+    renderMemberList(allMembers);
+  } catch(e) {
+    document.getElementById('member-list').innerHTML = `<div class="empty" style="height:200px"><div class="empty-sub">Could not load members</div></div>`;
+  }
+}
+
+function renderMemberList(members) {
+  if (!members.length) {
+    document.getElementById('member-list').innerHTML = `<div class="empty" style="height:200px"><div class="empty-sub">No members found</div></div>`;
+    return;
+  }
+  document.getElementById('member-list').innerHTML = members.map(m => `
+    <div class="member-item ${selectedMember === m.full_name ? 'active' : ''}"
+         onclick="selectMember('${m.full_name.replace(/'/g, "\\'")}')">
+      <div class="member-avatar ${m.gender === 'Male' ? 'avatar-male' : 'avatar-female'}">
+        ${getInitials(m.full_name)}
+      </div>
+      <div class="member-info">
+        <div class="member-name">${m.full_name}</div>
+        <div class="member-meta">${m.gender || ''} ${m.born ? '· b. ' + m.born : ''}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function getInitials(name) {
+  return name.split(' ').slice(0, 2).map(n => n[0]).join('');
+}
+
+// --- Search ---
+document.getElementById('search-input').addEventListener('input', async (e) => {
+  const q = e.target.value.trim();
+  if (!q) { renderMemberList(allMembers); return; }
+  try {
+    const res  = await fetch(`${API}/members/search?name=${encodeURIComponent(q)}`);
+    const data = await res.json();
+    renderMemberList(data.members);
+  } catch {}
+});
+
+// --- Random Member ---
+async function loadRandomMember() {
+  try {
+    const res  = await fetch(`${API}/members/random`);
+    const data = await res.json();
+    selectMember(data.full_name);
+  } catch {}
+}
+
+// --- Select Member ---
+async function selectMember(fullName) {
+  selectedMember = fullName;
+  switchTab('profile');
+
+  // Highlight in list
+  document.querySelectorAll('.member-item').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.member-item').forEach(el => {
+    if (el.querySelector('.member-name')?.textContent === fullName) el.classList.add('active');
+  });
+
+  document.getElementById('profile-container').innerHTML = `<div class="empty"><div class="empty-sub">Loading profile...</div></div>`;
+
+  try {
+    const [memberRes, connRes] = await Promise.all([
+      fetch(`${API}/members/${encodeURIComponent(fullName)}`),
+      fetch(`${API}/members/${encodeURIComponent(fullName)}/connections`)
+    ]);
+    const member = await memberRes.json();
+    const conns  = await connRes.json();
+    renderProfile(member, conns);
+  } catch(e) {
+    document.getElementById('profile-container').innerHTML = `<div class="empty"><div class="empty-sub">Could not load profile</div></div>`;
+  }
+}
+
+function renderProfile(m, conns) {
+  const isMale = m.gender === 'Male';
+
+  const chipsFor = (people, type) => people.length
+    ? people.map(p => `<span class="chip chip-${type}" onclick="selectMember('${p.full_name.replace(/'/g, "\\'")}')">${p.full_name}</span>`).join('')
+    : '<span style="color:var(--muted);font-size:0.8rem">None</span>';
+
+  document.getElementById('profile-container').innerHTML = `
+    <div class="profile-header">
+      <div class="profile-avatar ${isMale ? 'avatar-male' : 'avatar-female'}" style="font-size:1.8rem">
+        ${getInitials(m.full_name)}
+      </div>
+      <div>
+        <div class="profile-name">${m.full_name}</div>
+        <div class="profile-sub">${m.gender || ''} ${m.ethnicity1 ? '· ' + m.ethnicity1 : ''} ${m.ethnicity2 ? '/ ' + m.ethnicity2 : ''}</div>
+        ${m.notes ? `<div class="profile-sub" style="color:var(--accent);margin-top:0.3rem">✦ ${m.notes}</div>` : ''}
+      </div>
+    </div>
+
+    <div class="profile-details">
+      ${m.born ? `<div class="detail-item"><div class="detail-label">Born</div><div class="detail-value">${m.born}</div></div>` : ''}
+      ${m.died ? `<div class="detail-item"><div class="detail-label">Died</div><div class="detail-value">${m.died}</div></div>` : ''}
+      ${m.age  ? `<div class="detail-item"><div class="detail-label">Age</div><div class="detail-value">${m.age}</div></div>` : ''}
+      ${m.maiden_name ? `<div class="detail-item"><div class="detail-label">Maiden Name</div><div class="detail-value">${m.maiden_name}</div></div>` : ''}
+    </div>
+
+    <div class="connections-section">
+      <div class="connections-title">Family Connections</div>
+      <div class="connection-group">
+        <div class="detail-label">Parents</div>
+        <div class="connection-chips">${chipsFor(conns.parents, 'parent')}</div>
+      </div>
+      <div class="connection-group">
+        <div class="detail-label">Spouse</div>
+        <div class="connection-chips">${chipsFor(conns.spouse, 'spouse')}</div>
+      </div>
+      <div class="connection-group">
+        <div class="detail-label">Children</div>
+        <div class="connection-chips">${chipsFor(conns.children, 'child')}</div>
+      </div>
+      <div class="connection-group">
+        <div class="detail-label">Siblings</div>
+        <div class="connection-chips">${chipsFor(conns.siblings, 'sibling')}</div>
+      </div>
+    </div>
+  `;
+}
+
+// --- Tabs ---
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach((t, i) => {
+    const names = ['overview', 'profile', 'ask'];
+    t.classList.toggle('active', names[i] === name);
+  });
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById(`tab-${name}`).classList.add('active');
+}
+
+// --- AI Chat ---
+async function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const q     = input.value.trim();
+  if (!q) return;
+  input.value = '';
+  askQuestion(q);
+}
+
+async function askQuestion(question) {
+  switchTab('ask');
+  const messages = document.getElementById('chat-messages');
+  const sendBtn  = document.getElementById('send-btn');
+
+  messages.innerHTML += `<div class="message message-user">${question}</div>`;
+  messages.innerHTML += `<div class="message message-thinking" id="thinking">✦ thinking...</div>`;
+  messages.scrollTop = messages.scrollHeight;
+  sendBtn.disabled = true;
+
+  try {
+    const res  = await fetch(`${API}/ask`, {
+      method:  'POST',
+      headers: {'Content-Type': 'application/json'},
+      body:    JSON.stringify({question})
+    });
+    const data = await res.json();
+    document.getElementById('thinking')?.remove();
+    messages.innerHTML += `<div class="message message-agent">${data.answer}</div>`;
+  } catch(e) {
+    document.getElementById('thinking')?.remove();
+    messages.innerHTML += `<div class="message message-agent" style="color:var(--accent)">Sorry, I couldn't connect to the backend. Make sure it's running on port 8000.</div>`;
+  }
+
+  sendBtn.disabled = false;
+  messages.scrollTop = messages.scrollHeight;
+}
+
+init();
+</script>
+</body>
+</html>

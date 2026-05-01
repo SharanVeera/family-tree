@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  falkordb:
+    image: falkordb/falkordb:latest
+    container_name: falkordb
+    ports:
+      - "6379:6379"   # Redis-compatible port (FalkorDB API)
+      - "3000:3000"   # FalkorDB Browser UI
+    volumes:
+      - falkordb_data:/data
+    restart: unless-stopped
+
+volumes:
+  falkordb_data:

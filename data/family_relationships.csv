@@ -1,0 +1,81 @@
+Person A,Related to,Person B
+SadaShiva Reddy Veerapuram ,Father,Purushothama Reddy Veerapuram
+SadaShiva Reddy Veerapuram ,Father,Sridhar Reddy Veerapuram
+SadaShiva Reddy Veerapuram ,Father,Narendra Reddy Veerapuram
+Lakshmidevamma Veerapuram,Mother ,Purushothama Reddy Veerapuram
+Lakshmidevamma Veerapuram,Mother ,Sridhar Reddy Veerapuram
+Lakshmidevamma Veerapuram,Mother ,Narendra Reddy Veerapuram
+Purushothama Reddy Veerapuram,Father,Sharan Reddy Veerapuram
+Purushothama Reddy Veerapuram,Father,Akshaya Veerapuram
+Hemavathi Veerapuram,Mother ,Sharan Reddy Veerapuram
+Hemavathi Veerapuram,Mother ,Akshaya Veerapuram
+Sridhar Reddy Veerapuram,Father,Darshan Reddy Veerapuram
+Sridhar Reddy Veerapuram,Father,Uday Reddy Veerapuram
+Gayathri Veerapuram,Mother,Darshan Reddy Veerapuram
+Gayathri Veerapuram,Mother,Uday Reddy Veerapuram
+Narendra Reddy Veerapuram,Father,Mohith Reddy Veerapuram
+Narendra Reddy Veerapuram,Father,Krithik Reddy Veerapuram
+Sowjanya Veerapuram,Mother,Mohith Reddy Veerapuram
+Sowjanya Veerapuram,Mother,Krithik Reddy Veerapuram
+Shiva Prasad Reddy S,Father,Hemavathi Veerapuram
+Lakshmidevamma S,Mother,Hemavathi Veerapuram
+Aavula Reddy Y,Father,Gayathri Veerapuram
+Kanthamma Y,Mother,Gayathri Veerapuram
+Vishnu Reddy Kadiri,Father,Sowjanya Veerapuram
+Sukanya Kadiri,Mother,Sowjanya Veerapuram
+Ashwath Reddy Veerapuram,Father,Naveen Reddy Veerapuram
+Ashwath Reddy Veerapuram,Father,Chandra Sheaker Reddy Veerapuram
+Ashwath Reddy Veerapuram,Father,Sindhu B
+Anasuyamma Veerapuram,Mother,Naveen Reddy Veerapuram
+Anasuyamma Veerapuram,Mother,Chandra Sheaker Reddy Veerapuram
+Anasuyamma Veerapuram,Mother,Sindhu B
+Chandra Sheaker Reddy Veerapuram,Father,Siddansh Reddy Veerapuram
+Jyothi Veerapuram,Mother,Siddansh Reddy Veerapuram
+Sindhu B,Mother,Adithya Reddy B
+Narahari Reddy B,Father,Adithya Reddy B
+Lakshmidevamma Veerapuram,Spouse,SadaShiva Reddy Veerapuram
+Hemavathi Veerapuram,Spouse,Purushothama Reddy Veerapuram
+Gayathri Veerapuram,Spouse,Sridhar Reddy Veerapuram
+Sowjanya Veerapuram,Spouse,Narendra Reddy Veerapuram
+Lakshmidevamma S,Spouse,Shiva Prasad Reddy S
+Kanthamma Y,Spouse,Aavula Reddy Y
+Sukanya Kadiri,Spouse,Vishnu Reddy Kadiri
+Anasuyamma Veerapuram,Spouse,Ashwath Reddy Veerapuram
+Shobana Veerapuram,Spouse,Naveen Reddy Veerapuram
+Jyothi Veerapuram,Spouse,Chandra Sheaker Reddy Veerapuram
+Sindhu B,Spouse,Narahari Reddy B
+Tulasamma Veerapuram,Spouse,Bayappa Reddy Veerapuram
+Samatha Veerapuram,Spouse,Chakradhar Reddy Veerapuram
+Lakshmi BD,Spouse,Ramu Reddy BD
+Jeevana Sowmya Chowdary Veerapuram,Spouse,Sharan Reddy Veerapuram
+Ramana Anne,Spouse,Srinivas Rao Anne
+Bayappa Reddy Veerapuram,Father,Chakradhar Reddy Veerapuram
+Bayappa Reddy Veerapuram,Father,Lakshmi BD
+Tulasamma Veerapuram,Mother,Chakradhar Reddy Veerapuram
+Tulasamma Veerapuram,Mother,Lakshmi BD
+Chakradhar Reddy Veerapuram,Father,Druthi Veerapuram
+Chakradhar Reddy Veerapuram,Father,Vibha Veerapuram
+Samatha Veerapuram,Mother,Druthi Veerapuram
+Samatha Veerapuram,Mother,Vibha Veerapuram
+Lakshmi BD,Mother,Medha Reddy BD
+Lakshmi BD,Mother,Hanika Reddy BD
+Ramu Reddy BD,Father,Medha Reddy BD
+Ramu Reddy BD,Father,Hanika Reddy BD
+Ramana Anne,Mother,Jeevana Sowmya Chowdary Veerapuram
+Ramana Anne,Mother,Mithin Sai Anne
+Srinivas Rao Anne,Father,Jeevana Sowmya Chowdary Veerapuram
+Srinivas Rao Anne,Father,Mithin Sai Anne
+Narayana Reddy Veerapuram,Father,Bayappa Reddy Veerapuram
+Narayana Reddy Veerapuram,Father,SadaShiva Reddy Veerapuram
+Narayana Reddy Veerapuram,Father,Ashwath Reddy Veerapuram
+Chowdamma Veerapuram,Mother,Bayappa Reddy Veerapuram
+Chowdamma Veerapuram,Mother,SadaShiva Reddy Veerapuram
+Chowdamma Veerapuram,Mother,Ashwath Reddy Veerapuram
+Shobana Veerapuram,Mother,Thanvi Veerapuram
+Shobana Veerapuram,Mother,Jathin Reddy Veerapuram
+Naveen Reddy Veerapuram,Father,Thanvi Veerapuram
+Naveen Reddy Veerapuram,Father,Jathin Reddy Veerapuram
+Shiva Prasad Reddy S,Father,Padmavati S
+Lakshmidevamma S,Mother,Padmavati S
+Shiva Prasad Reddy S,Father,Venkata Shiva Reddy S
+Lakshmidevamma S,Mother,Venkata Shiva Reddy S
